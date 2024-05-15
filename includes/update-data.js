@@ -1,3 +1,5 @@
+let isUpdateFormSubmitted = false; // Variabile di stato per controllare se l'evento di invio del modulo è già stato associato
+
 function updateUser(e) {
   let id = e.target.getAttribute("data-val");
   console.log("update user: ", id);
@@ -7,7 +9,7 @@ function updateUser(e) {
 
   let updateForm = document.querySelector("#update-user-form");
 
-  //A. Populate the form fields with the data obtained from the database
+  // A. Populate the form fields with the data obtained from the database
   fetch(`./includes/select.php?id=${id}`)
     .then((response) => {
       if (!response.ok) {
@@ -20,7 +22,7 @@ function updateUser(e) {
 
       updateForm.reset(); // Reset the form
 
-      //Iterate over the properties of the first object in the userData array using Object.entries().
+      // Iterate over the properties of the first object in the userData array using Object.entries().
       for (const [key, value] of Object.entries(userData[0])) {
         // For each key-value pair in the object, look for an input field in the form with a matching name attribute.
         const inputField = updateForm.querySelector(`[name="${key}"]`);
@@ -36,10 +38,8 @@ function updateUser(e) {
       console.error("There was a problem with the fetch operation:", error);
     });
 
-  // --------------------------------------------------------------------
-
-  // B) submit update data after changing
-  updateForm.addEventListener("submit", function (event) {
+  // B) Submit update data after changing
+  function submitUpdate(event) {
     event.preventDefault();
 
     // Ask for confirmation before submitting the form
@@ -55,7 +55,7 @@ function updateUser(e) {
 
     fetch("./includes/update.php", {
       method: "POST",
-      header: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" }, // Corrected 'header' to 'headers'
       body: JSON.stringify(jsonData),
     })
       .then((response) => {
@@ -74,16 +74,24 @@ function updateUser(e) {
 
           // Update the table
           let table = document.querySelector("table");
-          tableContainer.removeChild(table);
-          updateTable();
+          if (table) {
+            table.parentNode.removeChild(table); // Changed 'tableContainer' to 'table.parentNode'
+            updateTable();
+          } else {
+            console.error("Table element not found.");
+          }
         }
       })
       .catch((error) => {
         console.error("There was a problem with the fetch operation:", error);
       });
-  });
+  }
 
-  // ------------------------------------------------------------------
+  // Verifica se l'evento di invio del modulo è già stato associato
+  if (!isUpdateFormSubmitted) {
+    updateForm.addEventListener("submit", submitUpdate);
+    isUpdateFormSubmitted = true; // Imposta la variabile di stato a true per indicare che l'evento è stato associato
+  }
 
   // C) Add button to close the form only if it doesn't exist yet
   if (!updateUserForm.querySelector(".close-button")) {
