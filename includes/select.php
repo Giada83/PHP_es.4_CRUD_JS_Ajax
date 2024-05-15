@@ -7,7 +7,15 @@ require_once __DIR__ . './config.php';
 
 // The script fetching all users from the database, storing them in an array, and then outputting the array in JSON format.
 
-$sql = 'SELECT * FROM students';
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    // Se è stato fornito un ID, recupera solo i dati dell'utente con quell'ID
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM students WHERE id = $id";
+} else {
+    // Se non è stato fornito un ID, seleziona tutti i dati degli studenti
+    $sql = "SELECT * FROM students";
+}
+// $sql = 'SELECT * FROM students';
 
 if ($results = $conn->query($sql)) {
     // Initialize an empty array to store the results

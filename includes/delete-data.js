@@ -4,6 +4,7 @@ function deleteUser(e) {
 
   const formData = new FormData();
   formData.append("id", id);
+
   fetch("./includes/delete.php", {
     method: "POST",
     header: { "Content-Type": "application/json" },

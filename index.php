@@ -11,8 +11,24 @@
   <h1>Students</h1>
   <button id="new-user">ADD STUDENT</button>
 
+  <!-- Insert data form -->
   <div id="user-form" style="display: none;">
     <form id="add-user-form">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name"><br><br>
+      <label for="surname">Surname:</label>
+      <input type="text" id="surname" name="surname"><br><br>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email"><br><br>
+      <button type="submit">Submit</button>
+      <button id="close-button">Close</button>
+    </form>
+  </div>
+
+  <!-- Update data form -->
+  <div id="update-form" style="display: none;">
+    <form id="update-user-form">
+      <input type="hidden" name="id">
       <label for="name">Name:</label>
       <input type="text" id="name" name="name"><br><br>
       <label for="surname">Surname:</label>
@@ -25,15 +41,10 @@
 
   <div id="container"></div>
 
-
-
-  <script>
-    <?php
-    require_once __DIR__ . './includes/select-data.js';
-    require_once __DIR__ . './includes/insert-data.js';
-    require_once __DIR__ . './includes/delete-data.js';
-    ?>
-  </script>
+  <script src="./includes/select-data.js"></script>
+  <script src="./includes/insert-data.js"></script>
+  <script src="./includes/update-data.js"></script>
+  <script src="./includes/delete-data.js"></script>
 </body>
 
 </html>

@@ -1,10 +1,12 @@
 <?php
 require_once __DIR__ . '/config.php';
 
-$id = ($_POST['id'] ?? '');
-$name = ($_POST['name'] ?? '');
-$surname = ($_POST['surname'] ?? '');
-$email = ($_POST['email'] ?? '');
+$jsonData = json_decode(file_get_contents("php://input"), true);
+
+$id = $conn->real_escape_string($jsonData['id'] ?? '');
+$name = $conn->real_escape_string($jsonData['name'] ?? '');
+$surname = $conn->real_escape_string($jsonData['surname'] ?? '');
+$email = $conn->real_escape_string($jsonData['email'] ?? '');
 
 if (!empty($id)) {
     $sql = "UPDATE students SET name=?, surname=?, email=? WHERE id=?";

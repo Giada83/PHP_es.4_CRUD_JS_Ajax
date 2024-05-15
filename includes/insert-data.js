@@ -5,6 +5,14 @@ function addUser() {
   let userForm = document.querySelector("#user-form");
   userForm.style.display = "block"; //selecting the div with the id "user-form" and setting the display CSS style to "block" to make it visible.
 
+  // Function to close the form
+  function closeForm() {
+    userForm.style.display = "none";
+  }
+  // Event listener for the Close button
+  let closeButton = document.querySelector("#close-button");
+  closeButton.addEventListener("click", closeForm);
+
   let addUserForm = document.querySelector("#add-user-form"); //select form trough id
 
   //When the user submits the form a function is activated to manage the form submission.
@@ -12,11 +20,28 @@ function addUser() {
     event.preventDefault();
 
     //Form data is collected using FormData, which creates an object containing all key/value pairs of form fields.
+
     // 1. creates a new FormData object from the HTML form with the id "add-user-form".
     //FormData is a built-in JavaScript object that represents a set of key/value pairs for HTML form data.
     const formData = new FormData(addUserForm);
+
+    //1a. Check if the form is empty
+    let isFormEmpty = true;
+    for (const [, value] of formData.entries()) {
+      if (value.trim() !== "") {
+        isFormEmpty = false;
+        break;
+      }
+    }
+
+    if (isFormEmpty) {
+      closeForm(); // If form is empty close the form
+      return;
+    }
+
     // 2. initializes a new empty JavaScript object
     let jsonData = {};
+
     //3. Iterating on FormData data
     //The for...of loop is used to iterate over all key/value pairs present in the FormData formData object. This loop extracts each key/value pair using FormData's entries() method.
     for (const [key, value] of formData.entries()) {
@@ -42,12 +67,17 @@ function addUser() {
         } else {
           console.log("Data received: ", data);
 
-          userForm.style.display = "none"; // Hide the user form
+          userForm.style.display = "none"; // Hide the form after successful submission
 
           // Update the table
           let table = document.querySelector("table");
           tableContainer.removeChild(table);
           updateTable();
+
+          // Reset form fields
+          addUserForm.reset();
+
+          alert("User added successfully!"); //show a success message
         }
       })
       .catch((error) => {
