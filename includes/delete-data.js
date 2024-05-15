@@ -2,6 +2,10 @@ function deleteUser(e) {
   let id = e.target.getAttribute("data-val");
   console.log("delete user: ", id);
 
+  if (!confirm("Are you sure you want to delete this user?")) {
+    return;
+  }
+
   const formData = new FormData();
   formData.append("id", id);
 

@@ -15,11 +15,11 @@
   <div id="user-form" style="display: none;">
     <form id="add-user-form">
       <label for="name">Name:</label>
-      <input type="text" id="name" name="name"><br><br>
+      <input type="text" id="name" name="name" require><br><br>
       <label for="surname">Surname:</label>
-      <input type="text" id="surname" name="surname"><br><br>
+      <input type="text" id="surname" name="surname" require><br><br>
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email"><br><br>
+      <input type="email" id="email" name="email" require><br><br>
       <button type="submit">Submit</button>
       <button id="close-button">Close</button>
     </form>
@@ -30,11 +30,11 @@
     <form id="update-user-form">
       <input type="hidden" name="id">
       <label for="name">Name:</label>
-      <input type="text" id="name" name="name"><br><br>
+      <input type="text" id="name" name="name" require><br><br>
       <label for="surname">Surname:</label>
-      <input type="text" id="surname" name="surname"><br><br>
+      <input type="text" id="surname" name="surname" require><br><br>
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email"><br><br>
+      <input type="email" id="email" name="email" require><br><br>
       <button type="submit">Submit</button>
     </form>
   </div>
