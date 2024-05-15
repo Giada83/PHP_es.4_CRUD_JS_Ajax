@@ -12,6 +12,18 @@
   <button id="new-user">ADD STUDENT</button>
   <div id="container"></div>
 
+  <div id="user-form" style="display: none;">
+    <form id="add-user-form">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name"><br><br>
+      <label for="surname">Surname:</label>
+      <input type="text" id="surname" name="surname"><br><br>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email"><br><br>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
 
   <script>
     <?php
