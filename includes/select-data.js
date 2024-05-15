@@ -37,6 +37,12 @@ function updateTable() {
           `;
 
         tableContainer.insertAdjacentHTML("beforeend", table); //insert HTML code at a specified position relative to the reference element (tableContainer -> div id='container'). 1°argument = string that specifies the relative position where to insert the HTML code -> "beforeend" indicates that the HTML code should be placed inside the tableContainer element.2°argument = string containing the HTML code to insert. In this case, the table variable contains the HTML code of the table.
+
+        // deletebtn
+        let deleteBtn = document.querySelectorAll(".delete-user");
+        for (let i = 0; i < deleteBtn.length; i++) {
+          deleteBtn[i].addEventListener("click", deleteUser);
+        }
       }
     })
     .catch((error) => {

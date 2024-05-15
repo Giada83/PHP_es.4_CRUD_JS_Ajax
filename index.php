@@ -10,7 +10,6 @@
 <body>
   <h1>Students</h1>
   <button id="new-user">ADD STUDENT</button>
-  <div id="container"></div>
 
   <div id="user-form" style="display: none;">
     <form id="add-user-form">
@@ -24,11 +23,15 @@
     </form>
   </div>
 
+  <div id="container"></div>
+
+
 
   <script>
     <?php
     require_once __DIR__ . './includes/select-data.js';
     require_once __DIR__ . './includes/insert-data.js';
+    require_once __DIR__ . './includes/delete-data.js';
     ?>
   </script>
 </body>

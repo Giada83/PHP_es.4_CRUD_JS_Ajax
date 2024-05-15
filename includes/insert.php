@@ -30,14 +30,14 @@ if ($conn->query($sql) === true) {
         "message" => "Data entered correctly",
         "response" => 1
     ];
+    echo json_encode($data);
 } else {
     $data = [
         "message" => "Error: " . $conn->error,
         "response" => 0
     ];
+    echo json_encode($data);
 }
-
-echo json_encode($data);
 
 // Close the database connection
 $conn->close();
