@@ -7,7 +7,7 @@ function addUser() {
   const formData = new FormData();
   formData.append("name", "giana");
   formData.append("surname", "rossi");
-  formData.append("email", "ciao");
+  formData.append("email", "gnam");
   console.log(formData);
 
   fetch("./includes/insert.php", {
@@ -26,6 +26,13 @@ function addUser() {
         console.error("Error from server:", data.error);
       } else {
         console.log("Data received: ", data);
+
+        // 1. select the table element
+        // 2. removes the table from the parents
+        // 3. calls a function to update the table and create it again.
+        let table = document.querySelector("table");
+        tableContainer.removeChild(table);
+        updateTable();
       }
     })
     .catch((error) => {

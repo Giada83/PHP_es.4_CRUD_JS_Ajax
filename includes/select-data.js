@@ -1,44 +1,48 @@
+updateTable();
+
 let users;
+let tableContainer = document.querySelector("#container"); //select the HTML element that has the id attribute equal to "container" and store it in the tableContainer variable.
 
-fetch("./includes/select.php", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-})
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error("Network response was not ok " + response.statusText);
-    }
-    return response.json();
+function updateTable() {
+  fetch("./includes/select.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
   })
-  .then((data) => {
-    if (data.error) {
-      console.error("Error from server:", data.error);
-    } else {
-      users = data; // all collected data will end up in the users variable to be reused
-      console.log("Data received: ", data);
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.error) {
+        console.error("Error from server:", data.error);
+      } else {
+        users = data; // all collected data will end up in the users variable to be reused
+        console.log("Data received: ", data);
 
-      let table = `
-        <table>
-          <thead>
-            <tr>
-              <td>ID</td>
-              <td>Name</td>
-              <td>Surname</td>
-              <td>Email</td>
-            </tr>
-          </thead>
+        let table = `
+          <table>
+            <thead>
+              <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Surname</td>
+                <td>Email</td>
+              </tr>
+            </thead>
+  
+            <tbody>${insertTable(data)}</tbody>
+          </table>
+          `;
 
-          <tbody>${insertTable(data)}</tbody>
-        </table>
-        `;
-
-      let tableContainer = document.querySelector("#container"); //select the HTML element that has the id attribute equal to "container" and store it in the tableContainer variable.
-      tableContainer.insertAdjacentHTML("beforeend", table); //insert HTML code at a specified position relative to the reference element (tableContainer -> div id='container'). 1°argument = string that specifies the relative position where to insert the HTML code -> "beforeend" indicates that the HTML code should be placed inside the tableContainer element.2°argument = string containing the HTML code to insert. In this case, the table variable contains the HTML code of the table.
-    }
-  })
-  .catch((error) => {
-    console.error("There was a problem with the fetch operation:", error);
-  });
+        tableContainer.insertAdjacentHTML("beforeend", table); //insert HTML code at a specified position relative to the reference element (tableContainer -> div id='container'). 1°argument = string that specifies the relative position where to insert the HTML code -> "beforeend" indicates that the HTML code should be placed inside the tableContainer element.2°argument = string containing the HTML code to insert. In this case, the table variable contains the HTML code of the table.
+      }
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+}
 
 function insertTable(users) {
   //users = array of object that contain fetch data
