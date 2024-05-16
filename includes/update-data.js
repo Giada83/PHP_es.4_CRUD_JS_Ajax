@@ -1,4 +1,4 @@
-let isUpdateFormSubmitted = false; // Variabile di stato per controllare se l'evento di invio del modulo è già stato associato
+let isUpdateFormSubmitted = false; // State variable to check whether the form submit event has already been bound
 
 function updateUser(e) {
   let id = e.target.getAttribute("data-val");
@@ -55,7 +55,7 @@ function updateUser(e) {
 
     fetch("./includes/update.php", {
       method: "POST",
-      headers: { "Content-Type": "application/json" }, // Corrected 'header' to 'headers'
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(jsonData),
     })
       .then((response) => {
@@ -75,7 +75,7 @@ function updateUser(e) {
           // Update the table
           let table = document.querySelector("table");
           if (table) {
-            table.parentNode.removeChild(table); // Changed 'tableContainer' to 'table.parentNode'
+            table.parentNode.removeChild(table);
             updateTable();
           } else {
             console.error("Table element not found.");
@@ -87,16 +87,16 @@ function updateUser(e) {
       });
   }
 
-  // Verifica se l'evento di invio del modulo è già stato associato
+  // Check if the event has already been associated with the update button
   if (!isUpdateFormSubmitted) {
     updateForm.addEventListener("submit", submitUpdate);
-    isUpdateFormSubmitted = true; // Imposta la variabile di stato a true per indicare che l'evento è stato associato
+    isUpdateFormSubmitted = true; // Set the state variable to true to indicate that the event has been attached
   }
 
   // C) Add button to close the form only if it doesn't exist yet
   if (!updateUserForm.querySelector(".close-button")) {
     const closeButton = document.createElement("button");
-    closeButton.textContent = "Chiudi";
+    closeButton.textContent = "Close";
     closeButton.className = "close-button"; // Add a class to identify the close button
     closeButton.addEventListener("click", function () {
       updateUserForm.style.display = "none";

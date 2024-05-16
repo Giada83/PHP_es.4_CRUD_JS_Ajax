@@ -1,87 +1,94 @@
-let addBtn = document.querySelector("#new-user"); //select button with id="new-user"
-addBtn.addEventListener("click", addUser); //start f addUser when button is clicked
+let addBtn = document.querySelector("#new-user"); // Select the button with id="new-user"
+let userForm = document.querySelector("#user-form"); // Select the div with id="user-form"
+let addUserForm = document.querySelector("#add-user-form"); // Select the form with id="add-user-form"
+let closeButton = document.querySelector("#close-button"); // Select the close button
 
+let submitHandlerAdded = false; // Flag to keep track if the event listener has been added
+
+// Function to open the form
 function addUser() {
-  let userForm = document.querySelector("#user-form");
-  userForm.style.display = "block"; //selecting the div with the id "user-form" and setting the display CSS style to "block" to make it visible.
-
-  // Function to close the form
-  function closeForm() {
-    userForm.style.display = "none";
+  userForm.style.display = "block"; // Show the form
+  // Add the event listener for the form submit only if it hasn't been added already
+  if (!submitHandlerAdded) {
+    addUserForm.addEventListener("submit", submitHandler);
+    submitHandlerAdded = true;
   }
-  // Event listener for the Close button
-  let closeButton = document.querySelector("#close-button");
-  closeButton.addEventListener("click", closeForm);
-
-  let addUserForm = document.querySelector("#add-user-form"); //select form trough id
-
-  //When the user submits the form a function is activated to manage the form submission.
-  addUserForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    //Form data is collected using FormData, which creates an object containing all key/value pairs of form fields.
-
-    // 1. creates a new FormData object from the HTML form with the id "add-user-form".
-    //FormData is a built-in JavaScript object that represents a set of key/value pairs for HTML form data.
-    const formData = new FormData(addUserForm);
-
-    //1a. Check if the form is empty
-    let isFormEmpty = true;
-    for (const [, value] of formData.entries()) {
-      if (value.trim() !== "") {
-        isFormEmpty = false;
-        break;
-      }
-    }
-
-    if (isFormEmpty) {
-      closeForm(); // If form is empty close the form
-      return;
-    }
-
-    // 2. initializes a new empty JavaScript object
-    let jsonData = {};
-
-    //3. Iterating on FormData data
-    //The for...of loop is used to iterate over all key/value pairs present in the FormData formData object. This loop extracts each key/value pair using FormData's entries() method.
-    for (const [key, value] of formData.entries()) {
-      //4.Assigning data to jsonData
-      //Inside the loop, each key/value pair is assigned to a corresponding attribute in the jsonData object.
-      jsonData[key] = value;
-    }
-
-    fetch("./includes/insert.php", {
-      method: "POST",
-      header: { "Content-Type": "application/json" },
-      body: JSON.stringify(jsonData), //data is then converted into a JavaScript object and then into a JSON string using JSON.stringify().
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data.error) {
-          console.error("Error from server:", data.error);
-        } else {
-          console.log("Data received: ", data);
-
-          userForm.style.display = "none"; // Hide the form after successful submission
-
-          // Update the table
-          let table = document.querySelector("table");
-          tableContainer.removeChild(table);
-          updateTable();
-
-          // Reset form fields
-          addUserForm.reset();
-
-          alert("User added successfully!"); //show a success message
-        }
-      })
-      .catch((error) => {
-        console.error("There was a problem with the fetch operation:", error);
-      });
-  });
 }
+
+// Function to close the form
+function closeForm(event) {
+  event.preventDefault(); // Prevent the default behavior of the close button
+  userForm.style.display = "none"; // Hide the form
+  // Remove the event listener for the form submit
+  addUserForm.removeEventListener("submit", submitHandler);
+  submitHandlerAdded = false; // Reset the flag
+}
+
+// Function for submit data
+function submitHandler(event) {
+  event.preventDefault();
+
+  // Collect form data
+  const formData = new FormData(addUserForm);
+
+  // Check if the form is empty
+  let isFormEmpty = true;
+  for (const [, value] of formData.entries()) {
+    if (value.trim() !== "") {
+      isFormEmpty = false;
+      break;
+    }
+  }
+
+  if (isFormEmpty) {
+    closeForm(event); // If the form is empty, don't submit data and close it
+    return;
+  }
+
+  // Create JSON object from form data
+  let jsonData = {};
+  for (const [key, value] of formData.entries()) {
+    jsonData[key] = value;
+  }
+
+  // Send POST request
+  fetch("./includes/insert.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(jsonData),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.error) {
+        console.error("Error from server:", data.error);
+      } else {
+        console.log("Data received: ", data);
+
+        // Hide the form after successful submission
+        userForm.style.display = "none";
+
+        // Update the table
+        let table = document.querySelector("table");
+        tableContainer.removeChild(table);
+        updateTable();
+
+        // Reset form fields
+        addUserForm.reset();
+
+        // Show a success message
+        alert("User added successfully!");
+      }
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+}
+
+// Event listener
+addBtn.addEventListener("click", addUser); //add button
+closeButton.addEventListener("click", closeForm); //close button
