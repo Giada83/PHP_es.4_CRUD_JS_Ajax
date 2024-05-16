@@ -19,6 +19,16 @@ function addUser() {
 function closeForm(event) {
   event.preventDefault(); // Prevent the default behavior of the close button
   userForm.style.display = "none"; // Hide the form
+
+  // Remove all error messages
+  const errorMessages = document.querySelectorAll(".error-message");
+  errorMessages.forEach((errorMessage) => {
+    errorMessage.remove();
+  });
+
+  // Clear form fields
+  addUserForm.reset();
+
   // Remove the event listener for the form submit
   addUserForm.removeEventListener("submit", submitHandler);
   submitHandlerAdded = false; // Reset the flag
@@ -64,8 +74,14 @@ function submitHandler(event) {
       return response.json();
     })
     .then((data) => {
-      if (data.error) {
-        console.error("Error from server:", data.error);
+      if (data.response === 0) {
+        // Error response from server
+        console.error("Error from server:", data.message);
+        // Display error message above the form
+        const errorMessage = document.createElement("div");
+        errorMessage.textContent = data.message;
+        errorMessage.className = "error-message"; // Add a class to style the error message
+        userForm.insertBefore(errorMessage, userForm.firstChild); // Insert error message above the form
       } else {
         console.log("Data received: ", data);
 

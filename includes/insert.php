@@ -23,6 +23,21 @@ if (empty($name) || empty($surname) || empty($email)) {
     exit;
 }
 
+// Check if the email already exists
+$emailCheckQuery = "SELECT COUNT(*) AS count FROM students WHERE email = '$email'";
+$emailCheckResult = $conn->query($emailCheckQuery);
+if ($emailCheckResult) {
+    $row = $emailCheckResult->fetch_assoc();
+    if ($row['count'] > 0) {
+        $data = [
+            "message" => "Email already exists",
+            "response" => 0
+        ];
+        echo json_encode($data);
+        exit;
+    }
+}
+
 // Query to insert data into the database
 $sql = "INSERT INTO students (name, surname, email) VALUES ('$name', '$surname', '$email')";
 if ($conn->query($sql) === true) {
