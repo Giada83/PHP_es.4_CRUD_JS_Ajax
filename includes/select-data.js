@@ -25,14 +25,15 @@ function updateTable() {
           <table>
             <thead>
               <tr>
-                <td>ID</td>
-                <td>Name</td>
-                <td>Surname</td>
-                <td>Email</td>
+                <td id="hidden">ID</td>
+                <td style="width: 20%;">Name</td>
+                <td style="width: 20%;">Surname</td>
+                <td style="width: 40%;">Email</td>
+                <td style="width: 20%;">Update - Delete</td>
               </tr>
             </thead>
   
-            <tbody>${insertTable(data)}</tbody>
+            <tbody class="striped-table">${insertTable(data)}</tbody>
           </table>
           `;
 
@@ -65,13 +66,15 @@ function insertTable(users) {
   users.forEach((user) => {
     let row = `
       <tr>
-        <td>${user.id}</td>
+        <td id="hidden">${user.id}</td>
         <td>${user.name}</td>
         <td>${user.surname}</td>
         <td>${user.email}</td>
         <td>
-          <button class="update-user" data-val="${user.id}">Update</button>
-          <button class="delete-user" data-val="${user.id}">Delete</button>
+          <div class="btn-group" role="group">
+            <button class="update-user btn btn-upd" data-val="${user.id}">Update</button>
+            <button class="delete-user btn btn-del" data-val="${user.id}">Delete</button>
+          </div>
         </td>
       </tr>`;
 

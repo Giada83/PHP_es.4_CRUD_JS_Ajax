@@ -1,0 +1,118 @@
+body {
+  background-color: #f2d6bd;
+}
+
+body,
+p,
+h1 {
+  margin: 0;
+}
+
+h1 {
+  font-weight: 400;
+  color: #5e5d8c;
+  margin-bottom: 1rem;
+}
+
+.col {
+  background-color: white;
+  padding: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.btn-form {
+  color: white;
+  border-radius: 0;
+  margin-bottom: 1rem;
+  border: none;
+}
+
+.a {
+  background-color: #5e5d8c;
+  margin-right: 0.5rem;
+}
+
+.b {
+  background-color: #d92534;
+}
+
+.a:hover {
+  background-color: white;
+  border: 1px solid #5e5d8c;
+  color: #5e5d8c;
+}
+
+.b:hover {
+  background-color: white;
+  border: 1px solid #d92534;
+  color: #d92534;
+}
+
+#hidden {
+  display: none;
+}
+
+thead tr:first-child {
+  background-color: #f2a516;
+  color: white;
+  width: 100%;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+thead tr td,
+tbody tr td {
+  padding: 0.5rem;
+}
+
+.striped-table tr:nth-child(even) {
+  background-color: #f2d6bd;
+}
+
+.btn-upd:hover {
+  background-color: #f27507;
+  color: white;
+}
+
+.btn-del:hover {
+  background-color: #d92534;
+  color: white;
+}
+.btn-del {
+  background-color: white;
+  border: 1px solid #d92534;
+  color: #d92534;
+}
+
+.btn-upd {
+  background-color: white;
+  border: 1px solid #f27507;
+  color: #f27507;
+}
+
+.form-style {
+  border: 1px solid #5e5d8c;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.form-style input {
+  margin-bottom: 0.5rem;
+}
+
+.form-style button {
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
+.error-message {
+  color: #d92534;
+  font-size: 1.5rem;
+  font-weight: lighter;
+  margin-bottom: 0.5rem;
+}
