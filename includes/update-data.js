@@ -70,6 +70,8 @@ function updateUser(e) {
         } else {
           console.log("Data received: ", data);
 
+          appendAlert("The user data has been successfully changed", "warning");
+
           updateUserForm.style.display = "none";
 
           // Update the table
@@ -93,26 +95,27 @@ function updateUser(e) {
     isUpdateFormSubmitted = true; // Set the state variable to true to indicate that the event has been attached
   }
 
-  // Check if the close button doesn't already exist
+  // C. Close form
+  //1. Check if the close button doesn't already exist
   if (!updateUserForm.querySelector(".close-button")) {
-    // Create a new close button
+    // 2.Create a new close button
     const closeButton = document.createElement("button");
-    // Set the text content of the close button
+    // 3.Set the text content of the close button
     closeButton.textContent = "Close";
-    // Add a class to identify the close button
+    // 4.Add a class to identify the close button
     closeButton.className = "close-button btn-form b";
-    // Set the type of the button to avoid the default form submission behavior
+    // 5.Set the type of the button to avoid the default form submission behavior
     closeButton.type = "button";
-    // Add an event listener to handle the click event of the close button
+    // 6.Add an event listener to handle the click event of the close button
     closeButton.addEventListener("click", function () {
-      // Hide the update user form when the close button is clicked
+      // 7.Hide the update user form when the close button is clicked
       updateUserForm.style.display = "none";
     });
 
-    // Find the submit button inside the form
+    // 8.Find the submit button inside the form
     const submitButton = updateUserForm.querySelector(".submit");
 
-    // Insert the close button next to the submit button
+    //9. Insert the close button next to the submit button
     submitButton.parentNode.insertBefore(closeButton, submitButton.nextSibling);
   }
 }

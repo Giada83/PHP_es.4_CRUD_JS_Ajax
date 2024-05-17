@@ -1,11 +1,12 @@
-function showAlert(message, className) {
-  const div = document.createElement("div");
-  div.className = `alert alert-${className}`; // Corrected class name
+const alertPlaceholder = document.getElementById("liveAlertPlaceholder");
+const appendAlert = (message, type) => {
+  const wrapper = document.createElement("div");
+  wrapper.innerHTML = [
+    `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+    `   <div>${message}</div>`,
+    '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+    "</div>",
+  ].join("");
 
-  div.appendChild(document.createTextNode(message));
-  const container = document.querySelector(".container");
-  const form = document.querySelector(".form-style");
-  container.insertBefore(div, form);
-
-  setTimeout(() => div.remove(), 3000); // Removed incorrect class selector
-}
+  alertPlaceholder.append(wrapper);
+};

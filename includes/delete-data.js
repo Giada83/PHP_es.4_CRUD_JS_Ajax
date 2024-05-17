@@ -26,6 +26,9 @@ function deleteUser(e) {
       } else {
         console.log("Data received: ", data);
 
+        // Show a success message
+        appendAlert("The selected user has been successfully deleted", "success");
+
         let table = document.querySelector("table");
         tableContainer.removeChild(table);
         updateTable();

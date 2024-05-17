@@ -96,8 +96,8 @@ function submitHandler(event) {
         // Reset form fields
         addUserForm.reset();
 
-        // // Show a success message
-        alert("User added successfully!");
+        // Show a success message
+        appendAlert("The user has been successfully added", "success");
       }
     })
     .catch((error) => {
