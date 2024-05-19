@@ -51,6 +51,12 @@ function updateUser(e) {
   function submitUpdate(event) {
     event.preventDefault();
 
+    // Remove all previous error messages
+    const errorMessages = document.querySelectorAll(".error-message");
+    errorMessages.forEach((errorMessage) => {
+      errorMessage.remove();
+    });
+
     const formData = new FormData(updateForm);
     let jsonData = {};
     for (const [key, value] of formData.entries()) {

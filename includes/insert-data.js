@@ -38,6 +38,12 @@ function closeForm(event) {
 function submitHandler(event) {
   event.preventDefault();
 
+  // Remove all previous error messages
+  const errorMessages = document.querySelectorAll(".error-message");
+  errorMessages.forEach((errorMessage) => {
+    errorMessage.remove();
+  });
+
   // Collect form data
   const formData = new FormData(addUserForm);
 
@@ -106,5 +112,5 @@ function submitHandler(event) {
 }
 
 // Event listener
-addBtn.addEventListener("click", addUser); //add button
-closeButton.addEventListener("click", closeForm); //close button
+addBtn.addEventListener("click", addUser); // add button
+closeButton.addEventListener("click", closeForm); // close button

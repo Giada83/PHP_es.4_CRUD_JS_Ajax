@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . '/config.php'; // Correggo il percorso del file config.php
+require_once __DIR__ . './config.php';
 require_once __DIR__ . './validation.php';
 
-// Query per verificare se un'altra riga ha la stessa email
+// Query to check if another row has the same email
 $checkEmailQuery = "SELECT id FROM students WHERE email = ? AND id != ?";
 $stmt = $conn->prepare($checkEmailQuery);
 $stmt->bind_param("si", $email, $id);
@@ -12,8 +12,8 @@ $row = $result->fetch_assoc();
 $stmt->close();
 
 if ($row) {
-    // Se esiste un'altra riga con la stessa email, ma con un ID diverso
-    // significa che l'email è già presente nel database
+    // If there is another row with the same email, but with a different ID
+    // means that the email is already present in the database
     $data = [
         "message" => "L'email è già presente nel database",
         "response" => 0

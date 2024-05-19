@@ -12,7 +12,7 @@ function validateForm(form) {
 
   // Reset error messages
   if (errorMessage) {
-    errorMessage.innerHTML = ""; // Rimuovi i messaggi di errore precedenti solo se esiste errorMessage
+    errorMessage.innerHTML = ""; // Remove previous error messages only if errorMessage exists
   }
 
   if (errorMessage) {
@@ -78,8 +78,8 @@ function validateEmail(email) {
   return emailPattern.test(email);
 }
 function sanitizeInput(input) {
-  // Rimuovi gli spazi vuoti iniziali e finali
+  // Remove leading and trailing whitespace
   input = input.trim();
-  // Controlla solo i caratteri consentiti in un indirizzo email
+  // Check only the characters allowed in an email address
   return input.replace(/[^\w\s@.-]/gi, "");
 }

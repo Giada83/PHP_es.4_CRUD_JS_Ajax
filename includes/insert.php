@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/config.php';
-require_once __DIR__ . './validation.php';
+require_once __DIR__ . './validation.php'; //php validation
 
 // Check if the email already exists
 $emailCheckQuery = "SELECT COUNT(*) AS count FROM students WHERE email = '$email'";
