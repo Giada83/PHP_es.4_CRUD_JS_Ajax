@@ -13,6 +13,7 @@ $name = $conn->real_escape_string($jsonData['name'] ?? '');
 $surname = $conn->real_escape_string($jsonData['surname'] ?? '');
 $email = $conn->real_escape_string($jsonData['email'] ?? '');
 
+
 // Data validation 
 if (empty($name) || empty($surname) || empty($email)) {
     $data = [
@@ -20,6 +21,27 @@ if (empty($name) || empty($surname) || empty($email)) {
         "response" => 0
     ];
     echo json_encode($data); //convert a PHP array or object to a JSON string. Useful to send a response from the server to the client (AJAX call) in a format that can be easily interpreted by the client's JavaScript.
+    exit;
+} elseif (strlen($name) < 2 || strlen($surname) < 2) {
+    $data = [
+        "message" => "Name and surname must be at least two characters long",
+        "response" => 0
+    ];
+    echo json_encode($data);
+    exit;
+} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $data = [
+        "message" => "Invalid email format",
+        "response" => 0
+    ];
+    echo json_encode($data);
+    exit;
+} elseif (!preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $email)) {
+    $data = [
+        "message" => "Invalid email format",
+        "response" => 0
+    ];
+    echo json_encode($data);
     exit;
 }
 

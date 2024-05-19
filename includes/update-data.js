@@ -9,6 +9,15 @@ function updateUser(e) {
 
   let updateForm = document.querySelector("#update-user-form");
 
+  // Remove existing error messages
+  function removeErrorMessages() {
+    const errorMessages = updateUserForm.querySelectorAll(".error-message");
+    errorMessages.forEach((message) => message.remove());
+  }
+
+  // Remove error messages before populating the form
+  removeErrorMessages();
+
   // A. Populate the form fields with the data obtained from the database
   fetch(`./includes/select.php?id=${id}`)
     .then((response) => {
@@ -42,11 +51,6 @@ function updateUser(e) {
   function submitUpdate(event) {
     event.preventDefault();
 
-    // Ask for confirmation before submitting the form
-    if (!confirm("Are you sure you want to make these changes?")) {
-      return;
-    }
-
     const formData = new FormData(updateForm);
     let jsonData = {};
     for (const [key, value] of formData.entries()) {
@@ -65,22 +69,37 @@ function updateUser(e) {
         return response.json();
       })
       .then((data) => {
-        if (data.error) {
-          console.error("Error from server:", data.error);
+        if (data.response === 0) {
+          // Error response from server
+          console.error("Error from server:", data.message);
+          // Display error message above the form
+          const errorMessage = document.createElement("div");
+          errorMessage.textContent = data.message;
+          errorMessage.className = "error-message"; // Add a class to style the error message
+          updateUserForm.insertBefore(errorMessage, updateUserForm.firstChild); // Insert error message above the form
         } else {
-          console.log("Data received: ", data);
+          // Check if the user wants to proceed with the update
+          if (confirm("Are you sure you want to make these changes?")) {
+            // If confirmed, proceed with the update
+            console.log("User confirmed update.");
 
-          appendAlert("The user data has been successfully changed", "warning");
+            console.log("Data received: ", data);
 
-          updateUserForm.style.display = "none";
+            appendAlert("The user data has been successfully changed", "warning");
 
-          // Update the table
-          let table = document.querySelector("table");
-          if (table) {
-            table.parentNode.removeChild(table);
-            updateTable();
+            updateUserForm.style.display = "none";
+
+            // Update the table
+            let table = document.querySelector("table");
+            if (table) {
+              table.parentNode.removeChild(table);
+              updateTable();
+            } else {
+              console.error("Table element not found.");
+            }
           } else {
-            console.error("Table element not found.");
+            // If not confirmed, do nothing
+            console.log("User canceled update.");
           }
         }
       })
@@ -108,8 +127,10 @@ function updateUser(e) {
     closeButton.type = "button";
     // 6.Add an event listener to handle the click event of the close button
     closeButton.addEventListener("click", function () {
-      // 7.Hide the update user form when the close button is clicked
+      // Hide the update user form when the close button is clicked
       updateUserForm.style.display = "none";
+      // Remove error messages when the form is closed
+      removeErrorMessages();
     });
 
     // 8.Find the submit button inside the form
